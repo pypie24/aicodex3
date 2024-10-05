@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info:
+  title: Investor API
+  version: 1.0.0
+paths:
+  /investors:
+    get:
+      summary: Retrieve a list of investors
+      responses:
+        '200':
+          description: A list of investors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Investor'
+    post:
+      summary: Create a new investor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Investor'
+      responses:
+        '201':
+          description: Investor created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Investor'
+  /investors/{id}:
+    get:
+      summary: Retrieve a specific investor by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The investor ID
+      responses:
+        '200':
+          description: A single investor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Investor'
+        '404':
+          description: Investor not found
+    put:
+      summary: Update an existing investor
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The investor ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Investor'
+      responses:
+        '200':
+          description: Investor updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Investor'
+        '404':
+          description: Investor not found
+    delete:
+      summary: Delete an investor
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The investor ID
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: Investor not found
+components:
+  schemas:
+    Investor:
+      type: object
+      properties:
+        InvestorID:
+          type: integer
+          readOnly: true
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Email:
+          type: string
+        PhoneNumber:
+          type: string
+        CreatedAt:
+          type: string
+          format: date-time
+          readOnly: true
